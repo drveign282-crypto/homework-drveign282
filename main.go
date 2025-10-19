@@ -8,6 +8,25 @@ func main() {
 	fmt.Println(isValid("[}()"))
 	fmt.Println(longestCommonPrefix([]string{"flower", "flow", "flight"}))
 	fmt.Println(plusOne([]int{1, 2, 9}))
+	fmt.Print(rmDuplicates([]int{1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 9}))
+}
+
+/**
+ * 删除数组重复元素,使用 O(1) 额外空间的条件下完成
+ */
+func rmDuplicates(ints []int) int {
+	size := len(ints)
+	i := 0
+	newInts := []int{ints[0]}
+	for j := 1; j < size-1; j++ {
+		if ints[i] != ints[j] {
+			i++
+			ints[i] = ints[j]
+			newInts = append(newInts, ints[i])
+		}
+	}
+	fmt.Println(newInts)
+	return i + 1
 }
 
 func plusOne(ints []int) []int {
