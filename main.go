@@ -4,6 +4,38 @@ import "fmt"
 
 func main() {
 	ctrl()
+	fmt.Println(isPalindrome(12321))
+	fmt.Print(isValid("[}()"))
+}
+
+func isValid(s string) bool {
+	// 创建一个空栈
+	stack := []rune{}
+	// 创建一个括号对的 map集合
+	maps := map[rune]rune{
+		')': '(',
+		'}': '{',
+		']': '[',
+	}
+	// 循环匹配字符串s
+	for _, char := range s {
+		switch char {
+		// 判断是否左括号，是的话则入栈
+		case '(', '[', '{':
+			stack = append(stack, char)
+		// 判断是否右括号，是的话，判断栈顶是否为空，为空则说明已经全部匹配，不为空则判断maps对应 key的值和栈顶的值是否匹配
+		case ')', ']', '}':
+			if len(stack) == 0 || maps[char] != stack[len(stack)-1] {
+				return false
+			}
+			// 匹配则弹出栈顶
+			stack = stack[:len(stack)-1]
+		default:
+			return false
+		}
+	}
+
+	return len(stack) == 0
 }
 
 // 控制流程-只出现一次的数字
