@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 func main() {
 	ctrl()
@@ -9,6 +12,37 @@ func main() {
 	fmt.Println(longestCommonPrefix([]string{"flower", "flow", "flight"}))
 	fmt.Println(plusOne([]int{1, 2, 9}))
 	fmt.Print(rmDuplicates([]int{1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 9}))
+	fmt.Println(merge([][]int{{1, 3}, {2, 6}, {8, 10}, {15, 18}}))
+}
+
+func merge(intervals [][]int) [][]int {
+	if len(intervals) == 0 {
+		return intervals
+	}
+	// 对intervals的起始位置进行排序
+	sort.Slice(intervals, func(i, j int) bool {
+		return intervals[i][0] < intervals[j][0]
+	})
+	merge := [][]int{intervals[0]}
+	// 逐个对比intervals其他区间集合，
+	for i := 1; i < len(intervals); i++ {
+		// merge最后一个区间
+		last := merge[len(merge)-1]
+		// 当前区间
+		current := intervals[i]
+		// 如果merge顶栈区间的结束区间小于当前区间的开始区间，则追加到 merge
+		if last[1] < current[0] {
+			merge = append(merge, intervals[i])
+		} else {
+			// 如果merge顶栈区间的结束区间大于当前区间的开始区间，则判断顶栈的结束区间是否小于当前区间的结束区间
+			// 小于则更新顶栈区间的结束区间
+			if last[1] < current[1] {
+				last[1] = current[1]
+			}
+		}
+	}
+
+	return merge
 }
 
 /**
