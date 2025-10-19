@@ -5,9 +5,47 @@ import "fmt"
 func main() {
 	ctrl()
 	fmt.Println(isPalindrome(12321))
-	fmt.Print(isValid("[}()"))
+	fmt.Println(isValid("[}()"))
+	fmt.Println(longestCommonPrefix([]string{"flower", "flow", "flight"}))
+	fmt.Println(plusOne([]int{1, 2, 9}))
 }
 
+func plusOne(ints []int) []int {
+	incr := 1
+	size := len(ints)
+	for i := size - 1; i >= 0; i-- {
+		num := ints[i] + incr
+		if num < 10 {
+			ints[i] = num
+			incr = 0
+		} else {
+			ints[i] = 0
+		}
+	}
+	if incr == 1 {
+		ints = append([]int{1}, ints...)
+	}
+	return ints
+}
+
+/**
+ * 查找最长公共前缀
+ */
+func longestCommonPrefix(prefixes []string) string {
+	first := prefixes[0]
+	for i := 1; i < len(first); i++ {
+		for j := 1; j < len(prefixes); j++ {
+			if prefixes[j][i] != first[i] {
+				return first[:i]
+			}
+		}
+	}
+	return first
+}
+
+/**
+ * 验证括号
+ */
 func isValid(s string) bool {
 	// 创建一个空栈
 	stack := []rune{}
@@ -38,7 +76,9 @@ func isValid(s string) bool {
 	return len(stack) == 0
 }
 
-// 控制流程-只出现一次的数字
+/**
+ *	控制流程-只出现一次的数字
+ */
 func ctrl() {
 	m := make(map[int]int)
 	nums := [5]int{4, 1, 2, 1, 2}
@@ -59,8 +99,10 @@ func ctrl() {
 	}
 }
 
-// 控制流程-回文数：指正读和反读都相同的数字
-// 只反转数字的后半部分，然后与前半部分比较，这样可以避免完全反转整个数字带来的溢出风险，尤其是大数
+/**
+ * 控制流程-回文数：指正读和反读都相同的数字
+ * 只反转数字的后半部分，然后与前半部分比较，这样可以避免完全反转整个数字带来的溢出风险，尤其是大数
+ */
 func isPalindrome(x int) bool {
 	// 个位数和0直接返回false
 	if x < 0 || (x%10 == 0 && x != 0) {
