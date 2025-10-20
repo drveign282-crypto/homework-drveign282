@@ -19,7 +19,7 @@ func main() {
 /**
  *给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 target  的那 两个 整数，并返回它们的数组下标
  */
-func twoSum(nums []int, target int) any {
+func twoSum(nums []int, target int) []int {
 	// 暴力枚举，时间复杂度：O(n²)（两层循环），空间复杂度：O(1)
 	result := make([]int, 0)
 	//for i := 0; i < len(nums); i++ {
