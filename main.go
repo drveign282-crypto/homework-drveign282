@@ -13,6 +13,37 @@ func main() {
 	fmt.Println(plusOne([]int{1, 2, 9}))
 	fmt.Print(rmDuplicates([]int{1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 9}))
 	fmt.Println(merge([][]int{{1, 3}, {2, 6}, {8, 10}, {15, 18}}))
+	fmt.Println(twoSum([]int{2, 17, 7, 15}, 9))
+}
+
+/**
+ *给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 target  的那 两个 整数，并返回它们的数组下标
+ */
+func twoSum(nums []int, target int) any {
+	// 暴力枚举，时间复杂度：O(n²)（两层循环），空间复杂度：O(1)
+	result := make([]int, 0)
+	//for i := 0; i < len(nums); i++ {
+	//	for j := i + 1; j < len(nums); j++ {
+	//		if nums[i]+nums[j] == target {
+	//			result = append(result, i, j)
+	//		}
+	//	}
+	//}
+
+	// 使用哈希表，空间换时间：时间复杂度：O(n)（只需一次遍历），空间复杂度：O(n)（哈希表存储最多n个元素）
+	m := make(map[int]int)
+	for i, v := range nums {
+		// 获取目标值减去当前值
+		targetMinus := target - v
+		// 判断map中是否存在目标值减去当前值
+		if j, ok := m[targetMinus]; ok {
+			// 存在则返回结果
+			return []int{j, i}
+		}
+		// 不存在则将当前值添加到map中
+		m[v] = i
+	}
+	return result
 }
 
 func merge(intervals [][]int) [][]int {
