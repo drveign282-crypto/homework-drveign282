@@ -3,17 +3,115 @@ package main
 import (
 	"fmt"
 	"sort"
+	"sync"
+	"sync/atomic"
 )
 
 func main() {
-	ctrl()
-	fmt.Println(isPalindrome(12321))
-	fmt.Println(isValid("[}()"))
-	fmt.Println(longestCommonPrefix([]string{"flower", "flow", "flight"}))
-	fmt.Println(plusOne([]int{1, 2, 9}))
-	fmt.Print(rmDuplicates([]int{1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 9}))
-	fmt.Println(merge([][]int{{1, 3}, {2, 6}, {8, 10}, {15, 18}}))
-	fmt.Println(twoSum([]int{2, 17, 7, 15}, 9))
+	// 基础
+	//ctrl()
+	//fmt.Println(isPalindrome(12321))
+	//fmt.Println(isValid("[}()"))
+	//fmt.Println(longestCommonPrefix([]string{"flower", "flow", "flight"}))
+	//fmt.Println(plusOne([]int{1, 2, 9}))
+	//fmt.Print(rmDuplicates([]int{1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 9}))
+	//fmt.Println(merge([][]int{{1, 3}, {2, 6}, {8, 10}, {15, 18}}))
+	//fmt.Println(twoSum([]int{2, 17, 7, 15}, 9))
+
+	// 高阶
+	// 指针-1
+	//a := 1
+	//work2.Add(&a)
+	//fmt.Println(a)
+
+	// 指针-2
+	//b := []int{1, 2}
+	//work2.Multiply(&b)
+	//fmt.Println(b)
+
+	// Goroutine-1
+	//work2.SyncWaitGroupTest()
+
+	// Goroutine-2
+	//tasks := []func(){
+	//	func() { time.Sleep(1 * time.Second) },
+	//	func() { time.Sleep(2 * time.Second) },
+	//	func() { time.Sleep(500 * time.Millisecond) },
+	//}
+	//work2.TaskExecute(tasks)
+
+	// 面向对象-1
+	//rectangle := work2.Rectangle{}
+	//rectangle.Area()
+	//rectangle.Perimeter()
+	//cicle := work2.Circle{}
+	//cicle.Area()
+	//cicle.Perimeter()
+
+	// 面向对象-2
+	//person := work2.Person{
+	//	Name: "张三",
+	//	Age:  18,
+	//}
+	//employee := work2.Employee{
+	//	Person:     person,
+	//	EmployeeID: 1,
+	//}
+	//employee.PrintInfo()
+
+	// Channel-1
+	//wg := sync.WaitGroup{}
+	//c := make(chan int)
+	//wg.Add(1)
+	//go work2.Sender(c, &wg, 10)
+	//wg.Add(1)
+	//go work2.Receive(c, &wg)
+	//wg.Wait()
+	//fmt.Println("Done")
+
+	// Channel-2
+	//wg := sync.WaitGroup{}
+	//c := make(chan int, 10)
+	//wg.Add(1)
+	//go work2.Sender(c, &wg, 100)
+	//wg.Add(1)
+	//go work2.Receive(c, &wg)
+	//wg.Wait()
+	//fmt.Println("Done")
+
+	// 锁机制-1
+	//var counter = 0
+	//wg := sync.WaitGroup{}
+	//lock := sync.Mutex{}
+	//wg.Add(10)
+	//for i := 0; i < 10; i++ {
+	//	go func() {
+	//		defer wg.Done()
+	//		for j := 0; j < 1000; j++ {
+	//			lock.Lock()
+	//			counter++
+	//			lock.Unlock()
+	//		}
+	//	}()
+	//}
+	//wg.Wait()
+	//fmt.Println("最终计数器值:", counter)
+
+	// 锁机制-2
+	var counter int32 = 0
+	wg := sync.WaitGroup{}
+	wg.Add(10)
+	for i := 0; i < 10; i++ {
+		go func() {
+			defer wg.Done()
+			for j := 0; j < 1000; j++ {
+				atomic.AddInt32(&counter, 1)
+			}
+		}()
+	}
+	wg.Wait()
+	fmt.Println("最终计数器值:", counter)
+
 }
 
 /**

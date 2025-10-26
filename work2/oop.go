@@ -1,0 +1,44 @@
+package work2
+
+import "fmt"
+
+type Shape interface {
+	Area()
+	Perimeter()
+}
+
+type Rectangle struct {
+}
+
+type Circle struct {
+}
+
+func (r *Rectangle) Area() {
+	fmt.Println("Rectangle Area")
+}
+
+func (r *Rectangle) Perimeter() {
+	fmt.Println("Rectangle Perimeter")
+}
+
+func (c *Circle) Area() {
+	fmt.Println("Circle Area")
+}
+
+func (r *Circle) Perimeter() {
+	fmt.Println("Circle Perimeter")
+}
+
+type Person struct {
+	Name string
+	Age  int
+}
+
+type Employee struct {
+	Person
+	EmployeeID int
+}
+
+func (e *Employee) PrintInfo() {
+	fmt.Println("Name:", e.Name, "Age:", e.Age, "EmployeeID:", e.EmployeeID)
+}
